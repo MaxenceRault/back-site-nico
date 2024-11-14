@@ -1,0 +1,43 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  nom          String
+  email        String        @unique
+  motDePasse   String
+  photo        String?
+  reservations Reservation[]
+  slots        Slot[]        // Ajoutez ce champ pour établir la relation
+}
+
+model Reservation {
+  id     Int    @id @default(autoincrement())
+  date   DateTime
+  heure  String
+  userId Int
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Contact {
+  id        Int      @id @default(autoincrement())
+  nom       String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model Slot {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  heure    String
+  reserved Boolean  @default(false)
+  userId   Int?
+  user     User?    @relation(fields: [userId], references: [id])
+}
