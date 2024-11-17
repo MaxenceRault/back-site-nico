@@ -15,9 +15,20 @@ dotenv.config();
 const app = express();
 const prisma = new PrismaClient();
 
-// Middleware
-app.use(cors());
+// Middleware CORS avec configuration explicite
+app.use(cors({
+  origin: 'http://localhost:3000', // Autorise le front-end local
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes HTTP autorisées
+  credentials: true, // Autorise l'envoi de cookies ou d'en-têtes d'authentification
+}));
+
+// Répondre aux requêtes préliminaires (OPTIONS)
+app.options('*', cors());
+
+// Middleware pour parser les requêtes JSON
 app.use(express.json());
+
+// Middleware pour les sessions
 app.use(session({
   secret: 'your_secret_key',
   resave: false,
