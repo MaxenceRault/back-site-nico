@@ -17,7 +17,7 @@ const prisma = new PrismaClient();
 
 // Middleware CORS avec configuration explicite
 app.use(cors({
-  origin: 'https://nikoguitar-848d8.web.app/', // Autorise le front-end local
+  origin: 'https://nikoguitar-848d8.web.app', // Autorise le front-end local
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes HTTP autorisées
   credentials: true, // Autorise l'envoi de cookies ou d'en-têtes d'authentification
 }));
